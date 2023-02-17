@@ -7,8 +7,7 @@
 
         <form v-on:submit.prevent="makeWebsiteThumbnail">
           <div class="form-group">
-            <input v-model="websiteUrl" type="text" id="website-input" placeholder="Enter a website"
-              class="form-control">
+            <input v-model="websiteUrl" type="text" id="website-input" placeholder="Enter a website" class="form-control">
           </div>
           <div class="form-group">
             <button class="btn btn-primary">Generate!</button>
@@ -17,7 +16,7 @@
         <img class="thumbnail" :src="thumbnailUrl" alt="Website Screenshot" />
       </div>
     </div>
-  </div>
+</div>
 </template>
 
 <script>

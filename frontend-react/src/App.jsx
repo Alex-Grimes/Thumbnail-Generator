@@ -1,34 +1,91 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { useState } from 'react';
+import reactLogo from './assets/react.svg';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [websiteUrl, setwebsiteUrl] = useState();
+
+  function makeWebsiteThumbnail() {
+    axios
+      .post('http://localhost:3000/api/thumbnail', {
+        url: this.websiteUrl,
+      })
+      .then((response) => {
+        this.thumbnailUrl = response.data.screenshot;
+      })
+      .catch((error) => {
+        // eslint-disable-next-line no-alert
+        window.alert(`The API returned an error: ${error}`);
+      });
+  }
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div id='App' className='container'>
+      <div className='row'>
+        <div className='col-md-6 offset-md-3 py-5'>
+          <h1>Generate a thumbnail of a website</h1>
+
+          <form>
+            <div className='form-group'>
+              <input
+                type='text'
+                id='website-input'
+                placeholder='Enter a website'
+                className='form-control'
+              />
+            </div>
+            <div className='form-group'>
+              <button className='btn btn-primary'>Generate!</button>
+            </div>
+          </form>
+          <img
+            className='thumbnail'
+            src='thumbnailUrl'
+            alt='Website Screenshot'
+          />
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
+
+// <style lang="scss">
+// #body {
+//   background-color: #2c3e50;
+//   color: #ffffff;
+// }
+
+// #app {
+//   font-family: Avenir, Helvetica, Arial, sans-serif;
+//   -webkit-font-smoothing: antialiased;
+//   -moz-osx-font-smoothing: grayscale;
+//   text-align: center;
+//   color: #ffffff;
+//   background: #2c3e50;
+// }
+
+// div {
+//   background-color: #2c3e50;
+//   color: #ffffff;
+// }
+
+// nav {
+//   padding: 30px;
+
+//   a {
+//     font-weight: bold;
+//     color: #ffffff;
+
+//     &.router-link-exact-active {
+//       color: #42b983;
+//     }
+//   }
+// }
+
+// .thumbnail {
+//   width: max-content;
+//   height: fit-content;
+// }
+// </style>
