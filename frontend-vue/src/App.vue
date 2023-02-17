@@ -1,4 +1,5 @@
 <!-- eslint-disable vuejs-accessibility/form-control-has-label -->
+<!-- eslint-disable -->
 <template>
   <div id="app" class="container">
     <div class="row">

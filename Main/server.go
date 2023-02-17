@@ -17,9 +17,8 @@ type screenshotAPIRequest struct {
 	ThumbnailWidth int    `json:"thumbnail_width"`
 }
 
-func homePageHandler(w http.ResponseWriter, r *http.Request) {
-	_, err := fmt.Fprintf(w, "hello world")
-	checkError(err)
+func enableCors(w *http.ResponseWriter) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
 }
 
 func checkError(err error) {
@@ -35,6 +34,7 @@ type thumbnailRequest struct {
 //'B8YS5PY-C2S4YAB-HDGQ5T8-CH8K8HT'
 
 func thumbnailHandler(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
 	var decoded thumbnailRequest
 
 	// Try to decode the request into the thumbnailRequest struct.
@@ -61,6 +61,7 @@ func thumbnailHandler(w http.ResponseWriter, r *http.Request) {
 	// Create a HTTP request.
 	req, err := http.NewRequest("POST", "https://shot.screenshotapi.net/screenshot", bytes.NewBuffer(jsonString))
 	req.Header.Set("Content-Type", "application/json")
+	checkError(err)
 
 	// Execute the HTTP request.
 	client := &http.Client{}
@@ -87,7 +88,7 @@ func main() {
 
 	http.HandleFunc("/api/thumbnail", thumbnailHandler)
 	// Serve static files from the frontend/dist directory.
-	fs := http.FileServer(http.Dir("./frontend/dist"))
+	fs := http.FileServer(http.Dir("./frontend-react/dist"))
 	http.Handle("/", fs)
 
 	fmt.Println("Server listening on port 3000")
