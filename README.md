@@ -1,5 +1,7 @@
 Thumbnail-Generator
 
+### project on hold until a suitable api alternative is found 
+
 Thumbnail-Generator is a web application for generating thumbnails for images. The application is built with a Go backend and a Vue.js frontend.
 Getting Started
 
